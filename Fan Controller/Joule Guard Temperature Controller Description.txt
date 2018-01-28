@@ -1,0 +1,38 @@
+Joule Guard Temperature Controller Description
+
+It’s a differential temperature controller that turns fans on and off in
+specially designed enclosures
+
+It will cool the batteries when the night air is colder than the
+batteries
+
+It will warm batteries during the day when the outside air is 
+warmer than the batteries
+
+It does this by constantly comparing the temperature differential
+between the batteries and the skin of the enclosure (top)
+
+When the batteries are above 80F, the controller is in COOL mode
+When the batteries are below 50F, the controller is in HEAT mode
+
+Between 50 and 80F, is OKAY mode, we don’t do anything because the
+battery is fine
+
+The battery and enclosure temperature sensors are 10K thermistors
+
+The alarm sensor will be a photocell in almost all cases, and will
+control the load relay. It will be relabeled photo eye
+
+The load relay is normally closed unless a photoeye is connected to
+the sensor input, whereas it closes at dusk and opens at dawn
+
+The relay is also programmed to disconnect the load if the battery
+voltage falls below 11.0V, providing the LVD (Low Voltage Disconnect)
+function.  It will reconnect at 12.5V after several days of recharging
+
+The load relay has a switching capability of 1A
+The F1 – F4  fan outputs have a combined output of 5A
+
+
+
+

@@ -1,0 +1,76 @@
+Fan Controller Notes
+
+Assumptions
+	The system will be comprised of a vented and solar shielded battery enclosure
+	that contains one or more batteries that are used as a power source in the
+	overall system. Typical installations will be outdoors exposed to the 
+	local weather conditions. The batteries may recieve charging curent from a
+	variety of sources including solar panels, wind turbines, or an engine
+	driven altenator. The fan controller device will not be exposed directly to the
+	weather
+
+Purpose
+	The purpose of the fan controller is to circulate air from outside the
+	battery enclosure to either cool or heat the battery as required.
+	Maintaining the battery temperature within a suitable range will extend the
+	life of the battery.
+
+Implementation
+	The controller will consist of:
+	
+	A microprocessor based board with custom software
+	
+	2 LED indicators, 1 each Tricolor red/blue/green and 1 green
+		Tricolor 1 (only green is used)
+		Green On - Fan On       Off - Fan Off  Flashing - Fan fault
+		Tricolor 2 
+		Red On - heating mode   Flashing - Battery Thermistor Fault 
+		Blue On - cooling mode  Flashing - Ambient Thermistor Fault
+		Green On - OK mode  	Flashing Fast - Heat/Cool unavailable
+	
+	2 Fans consuming 6.6W each at 12V (0.55A). The fans will have a locked rotor
+	signal so fan operation may be monitored by the controller
+
+	2 Thermistor inputs for monitoring the temperature of the battery and the
+	ambient air temperature in the immediate vacinity of the battery enclosure
+
+	A voltage input to measure the battery voltage for a low voltage
+	disconenct feature. The the battery voltage is <10V it will be 
+	dissconnected or the controller will enter a low power state to
+	prevent the battery from being further depleted
+	The controller will be powered from the bateries which are being monitored.
+	The acceptable voltage input to the controller will be 6V to 20V 
+	The controller will tolerate reverse voltage input without permenant damage
+	
+	The controller will consume no more than 15 watts total in normal operation
+	including the 13.2W fan loads
+	
+	When idle, the controller will sleep to reduce power consumption
+	
+	The controller will actuate the fan in the following manner:
+		If the battery temperature is 50F to 75F no action is taken, the fan is
+		off and the green tricolor LED is illuminated
+		If the battery temperature is >75F and the ambient temperature is at
+		least 5 degrees cooler than the battery, the fan will operate to cool
+		the battery and the Tricolor Blue LED is illuminated
+		If the battery temperature is <50F and the ambient temperature is at
+		least 5 degrees warmer than the battery, the fan will operate to heat
+		the battery and the Red Tricolor LED is illuminated
+		If heating or cooling is required, but tke ambient air temperature is
+		unacceptable, the green OK light will flash
+		If the "Fan On" contact input is shorted, the fan will run with no
+		regard to battery or air temperature
+		At power on, the fan will run for 10 seconds for purposes of testing the
+		fan operation
+		The fan will be acutated in such a manner to reduce the surge current 
+		of the fan motor startup
+
+	Fault Conditions
+		An open or shorted thermistor will cause the red and/or blue LED to flash
+		If the fan will not operate the green "fan on" LED will flash
+
+ 	Additional points to consider
+		What behavior should occur if the system is stored but batteries/fan
+		controller are powered?
+		There should be a deep sleep condition. How to wake up?
+		
